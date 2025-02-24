@@ -16,8 +16,8 @@ internal fun onMessageCreate(httpClient: HttpClient): suspend MessageCreateEvent
 	// ignore bot messages
 	if (message.author?.isBot != false) return@event
 
-	// match anything that looks like [[link]] or [[link|]] or [[link|text]] with an optional suffix
-	val matches = Regex("""(?<!\\)\[\[(.+?)(\|.*?)?]]([^ ]+)?""").findAll(message.content)
+	// match anything that looks like [[link]] or [[link|]] or [[link|text]]
+	val matches = Regex("""(?<!\\)\[\[(.+?)(\|.*?)?]]""").findAll(message.content)
 	// ignore messages without MediaWiki links
 	if (matches.count() == 0) return@event
 
@@ -31,7 +31,6 @@ private suspend fun processMediaWikiLinkMatch(message: Message, match: MatchResu
 	// extract the parameters from the text
 	val page = match.groupValues[1].trim()
 	val linkText = match.groupValues[2].trim()
-	val suffix = match.groupValues[3]
 
 	// make a REST API call to find if the page exists
 	val response = getMediaWikiPageBare(httpClient, page)
@@ -61,7 +60,6 @@ private suspend fun processMediaWikiLinkMatch(message: Message, match: MatchResu
 			append("Link: ")
 			append("[")
 			append(markdownLinkText)
-			append(suffix)
 			append("]")
 			append("(")
 			append(MEDIAWIKI_ARTICLE_PATH.replace("$1", responseContent.key))

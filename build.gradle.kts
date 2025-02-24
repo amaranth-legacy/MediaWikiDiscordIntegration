@@ -2,19 +2,19 @@ plugins {
 	id("java")
 	application
 	kotlin("jvm")
-	kotlin("plugin.serialization") version "2.1.0"
-	id("io.ktor.plugin") version "3.1.0"
+	kotlin("plugin.serialization")
+	id("io.ktor.plugin")
 }
 
 group = "community.amaranth_legacy.mediawiki_discord_integration"
-version = "0.2.1"
+version = "0.3.0"
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	testImplementation(platform("org.junit:junit-bom:5.10.0"))
+	testImplementation(platform("org.junit:junit-bom:5.11.4"))
 	testImplementation("org.junit.jupiter:junit-jupiter")
 
 	// Kord
@@ -22,7 +22,7 @@ dependencies {
 	// Logback
 	implementation("ch.qos.logback:logback-classic:1.5.16")
 	// kotlin-logging
-	implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
+	implementation("io.github.oshai:kotlin-logging-jvm:7.0.4")
 	// Ktor client
 	implementation("io.ktor:ktor-client-core")
 	implementation("io.ktor:ktor-client-cio")
